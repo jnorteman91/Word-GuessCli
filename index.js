@@ -4,7 +4,7 @@ var inquirer = require("inquirer");
 var colors = require("colors");
 
 //Array of characters
-wordArray = ["Aku Aku", "Coco Bandicoot", "Dingodile", "Dr. Neo Cortex", "Dr. N. Gin", "Crash Bandicoot", "Pinstripe Potoroo", "Dr. Nefarious Trophy", "Nitrous Oxide", "Polar", "Pura"];
+wordArray = ["aku aku", "coco bandicoot", "dingodile", "dr. neo cortex", "dr. n. gin", "crash bandicoot", "pinstripe", "dr. nefarious trophy", "nitrous oxide", "polar", "pura"];
 var select = 0;
 var chosenWord = "";
 var gameWord = "";
@@ -13,7 +13,7 @@ var count = 0;
 //Selects a word from the array, and uses a constructor to creat display and function
 function startGame() {
     if (wordArray.length < 2) {
-        wordArray = ["Aku Aku", "Coco Bandicoot", "Dingodile", "Dr. Neo Cortex", "Dr. N. Gin", "Crash Bandicoot", "Pinstripe Potoroo", "Dr. Nefarious Trophy", "Nitrous Oxide", "Polar", "Pura"];
+        wordArray = ["aku aku", "coco bandicoot", "dingodile", "dr. neo cortex", "dr. n. gin", "crash bandicoot", "pinstripe", "dr. nefarious trophy", "nitrous oxide", "polar", "pura"];
     }
     select = Math.floor(Math.random()*wordArray.length);
     chosenWord = wordArray[select];
@@ -28,7 +28,7 @@ function startGame() {
 
 //Lets the user input a guessed letter and resets if there is no more remaining guesses
 function promptUser() {
-    if (counter < 10) {
+    if (count < 10) {
         console.log(gameWord.showWord());
         inquirer.prompt([
             {
@@ -45,7 +45,7 @@ function promptUser() {
         chosenWord = "";
         gameWord = "";
         select = 0;
-        counter = 0;
+        count = 0;
         startGame();
     }
 }
@@ -53,7 +53,7 @@ function promptUser() {
 //Checks input for format and compares letter to see if it is correct
 function checkAnswer(data) {
     if ((data.letter.length === 1) && /^[a-zA-Z]+$/.test(data.letter)) {
-        var check = data.letter.toUpperCase();
+        var check = data.letter.toLowerCase();
         var let = gameWord.showWord();
         gameWord.checkGuess(check);
         if (let === gameWord.showWord()) {
@@ -65,7 +65,7 @@ function checkAnswer(data) {
             rightGuess();
         }
     } else {
-        console.log("\nPlease enter a letter.\n".yellow);
+        console.log("\nPlease enter a letter one at a time.\n".yellow);
         promptUser();
     }
 }
@@ -79,7 +79,7 @@ function rightGuess() {
         chosenWord = "";
         gameWord = "";
         select = 0;
-        counter = 0;
+        count = 0;
         startGame();
     } else {
         promptUser();
